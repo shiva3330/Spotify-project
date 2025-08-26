@@ -83,7 +83,7 @@ async function displayAlbums() {
   let array = Array.from(anchors)
   for (let index = 0; index < array.length; index++) {
     const e = array[index]; 
-    if (e.href.includes("/songs/")) {
+    if (e.href.includes("songs/")) {
       let folder = e.href.split("/").slice(-1)[0];
       let a = await fetch(`songs/${folder}/info.json`)
       let response = await a.json()
@@ -156,7 +156,7 @@ async function main() {
     }
   })
   volume.addEventListener("click", (e) => {
-    if (e.target.src.includes("/assets/volume.png")) {
+    if (e.target.src.includes("assets/volume.png")) {
       e.target.src = e.target.src.replace("assets/volume.png", "assets/mute.png")
       currentSong.volume = 0;
       volumec.value = 0;
