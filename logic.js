@@ -28,7 +28,7 @@ async function getsongs(folder) {
   for (let i = 0; i < as.length; i++) {
     let element = as[i];
     if (element.href.endsWith(".mp3")) {
-      songs.push(element.href.split(`/${folder}/`)[1]);
+      songs.push(element.href.split(`${folder}/`)[1]);
     }
   }
   
@@ -60,7 +60,7 @@ async function getsongs(folder) {
 }
 
 const playMusic = (track, pause = false) => {
-  currentSong.src = `/${currFolder}/` + track
+  currentSong.src = `${currFolder}/` + track
   if (!pause) {
     currentSong.play()
     playbutton.src = "assets/pause.png"
