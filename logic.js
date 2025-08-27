@@ -75,7 +75,7 @@ const playMusic = (track, pause = false) => {
 async function displayAlbums() {
   
   let section = document.querySelector(".section")
-  let a = await fetch("songs/")
+  let a = await fetch("/songs/")
   let response = await a.text()
   let div = document.createElement("div")
   div.innerHTML = response
@@ -83,12 +83,12 @@ async function displayAlbums() {
   let array = Array.from(anchors)
   for (let index = 0; index < array.length; index++) {
     const e = array[index]; 
-    if (e.href.includes("songs/")) {
+    if (e.href.includes("/songs/")) {
       let folder = e.href.split("/").slice(-1)[0];
-      let a = await fetch(`songs/${folder}/info.json`)
+      let a = await fetch(`/songs/${folder}/info.json`)
       let response = await a.json()
       section.innerHTML = section.innerHTML + `<div data-folder="${folder}" class="album">
-      <img src="songs/${folder}/cover.jpg" alt="" id="song-img" />
+      <img src="/songs/${folder}/cover.jpg" alt="" id="song-img" />
       <img src="assets/play.png" alt="" id="play-butt" />
       <span id="albumname">${response.title}</span>
       <span id="albuminfo">${response.description}</span>
@@ -98,7 +98,7 @@ async function displayAlbums() {
 
   Array.from(document.getElementsByClassName("album")).forEach(e => {
     e.addEventListener("click", async item => {
-      songs = await getsongs(`songs/${item.currentTarget.dataset.folder}`)
+      songs = await getsongs(`/songs/${item.currentTarget.dataset.folder}`)
       document.querySelector(".left").style.left = "5px"
       playMusic(songs[0])
     })
@@ -106,7 +106,7 @@ async function displayAlbums() {
 }
 
 async function main() {
-  await getsongs("songs/Melodies");
+  await getsongs("/songs/Melodies");
   playMusic(songs[0], true)
   await displayAlbums()
   
