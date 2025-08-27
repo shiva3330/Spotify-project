@@ -142,15 +142,17 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0px 10px;
 }
 #close{
   width: 20px;
   visibility: hidden;
 }
 .playart button {
+  font-size: 15px;
   border: none;
   border-radius: 20px;
-  padding: 10px;
+  padding: 10px 15px;
   font-weight: bold;
   background-color: rgb(39, 39, 39);
   color: white;
@@ -333,7 +335,7 @@ footer hr {
     width: 45vw;
     height: 30px;
     font-size: 15px;
-    padding: 10px;
+    padding: 10px 20px;
   }
   .right{
     height: 80vh;
