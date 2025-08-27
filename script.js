@@ -19,7 +19,7 @@ function sectomin(seconds) {
 
 async function getsongs(folder) {
   currFolder = folder
-  let response = await fetch(`/${folder}/`);
+  let response = await fetch(folder);
   let data = await response.text();
   let div = document.createElement("div");
   div.innerHTML = data;
@@ -60,7 +60,7 @@ async function getsongs(folder) {
 }
 
 const playMusic = (track, pause = false) => {
-  currentSong.src = `/${currFolder}/` + track
+  currentSong.src = `${currFolder}/` + track
   if (!pause) {
     currentSong.play()
     playbutton.src = "assets/pause.png"
@@ -75,7 +75,7 @@ const playMusic = (track, pause = false) => {
 async function displayAlbums() {
   
   let section = document.querySelector(".section")
-  let a = await fetch(`/songs/`)
+  let a = await fetch("songs")
   let response = await a.text()
   let div = document.createElement("div")
   div.innerHTML = response
@@ -85,7 +85,7 @@ async function displayAlbums() {
     const e = array[index]; 
     if (e.href.includes("/songs/") && !e.href.includes(".htaccess")) {
       let folder = e.href.split("/").slice(-1)[0];
-      let a = await fetch(`/songs/${folder}/info.json`)
+      let a = await fetch(`songs/${folder}/info.json`)
       let response = await a.json()
       section.innerHTML = section.innerHTML + `<div data-folder="${folder}" class="album">
       <img src="/songs/${folder}/cover.jpg" alt="" id="song-img" />
