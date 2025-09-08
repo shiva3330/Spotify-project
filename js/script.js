@@ -1,4 +1,5 @@
 console.log("Lets get started");
+
 let songs
 let currentSong = new Audio();
 let currFolder;
@@ -18,14 +19,14 @@ function sectomin(seconds) {
 
 async function getsongs(folder) {
   currFolder = folder
-  let a = await fetch(`/${folder}/`);
-  let response = await a.text();
+  let response = await fetch(folder);
+  let data = await response.text();
   let div = document.createElement("div");
-  div.innerHTML = response;
+  div.innerHTML = data;
   let as = div.getElementsByTagName("a");
   songs = []
   for (let i = 0; i < as.length; i++) {
-    const element = as[i];
+    let element = as[i];
     if (element.href.endsWith(".mp3")) {
       songs.push(element.href.split(`/${folder}/`)[1]);
     }
@@ -33,8 +34,8 @@ async function getsongs(folder) {
   
   let songUl = document.querySelector(".songlist").getElementsByTagName("ul")[0];
   songUl.innerHTML = ""
-  let al = await fetch(`/${folder}/info.json`)
-  let ab = await al.json()
+  let a = await fetch(`/${folder}/info.json`)
+  let ab = await a.json()
   for (const song of songs) {
     songUl.innerHTML = songUl.innerHTML + `<li>
     <div class = "info">
@@ -59,7 +60,7 @@ async function getsongs(folder) {
 }
 
 const playMusic = (track, pause = false) => {
-  currentSong.src = `/${currFolder}/` + track
+  currentSong.src = `${currFolder}/` + track
   if (!pause) {
     currentSong.play()
     playbutton.src = "assets/pause.png"
@@ -73,18 +74,18 @@ const playMusic = (track, pause = false) => {
 
 async function displayAlbums() {
   
-  let a = await fetch(`/songs/`)
+  let section = document.querySelector(".section")
+  let a = await fetch("songs")
   let response = await a.text()
   let div = document.createElement("div")
   div.innerHTML = response
   let anchors = div.getElementsByTagName("a")
-  let section = document.querySelector(".section")
   let array = Array.from(anchors)
   for (let index = 0; index < array.length; index++) {
     const e = array[index]; 
-    if (e.href.includes("/songs") && !e.href.includes(".htaccess")) {
+    if (e.href.includes("/songs/") && !e.href.includes(".htaccess")) {
       let folder = e.href.split("/").slice(-1)[0];
-      let a = await fetch(`/songs/${folder}/info.json`)
+      let a = await fetch(`songs/${folder}/info.json`)
       let response = await a.json()
       section.innerHTML = section.innerHTML + `<div data-folder="${folder}" class="album">
       <img src="/songs/${folder}/cover.jpg" alt="" id="song-img" />
@@ -105,10 +106,8 @@ async function displayAlbums() {
 }
 
 async function main() {
-
   await getsongs("songs/Melodies");
   playMusic(songs[0], true)
-  
   await displayAlbums()
   
   playbutton.addEventListener("click", () => {
@@ -234,3 +233,4 @@ async function main() {
 }
 
 main();
+  
